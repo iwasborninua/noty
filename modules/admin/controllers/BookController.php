@@ -2,6 +2,7 @@
 
 namespace app\modules\admin\controllers;
 
+use app\models\Author;
 use Yii;
 use app\models\Book;
 use app\models\BookSerch;
@@ -114,7 +115,17 @@ class BookController extends Controller
 
     public function actionList()
     {
-        return 'book';
+        $books = Book::find()->asArray()->all();
+        for ($i = 0; $i < count($books); $i++) {
+            $books[$i]['author_name'] = Author::find()->where(['id' => $books[$i]['author_id']])->asArray()->one()['author_name'];
+        }
+
+//        echo "<pre>";
+//        var_dump($books);
+
+        return $this->render('list', [
+            'books' => $books
+        ]);
     }
 
     /**
