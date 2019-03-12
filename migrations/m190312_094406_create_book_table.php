@@ -18,7 +18,7 @@ class m190312_094406_create_book_table extends Migration
             'author_id' => $this->integer(),
         ]);
 
-        $this->addForeignKey('fk-book-autor_id', 'book', 'author_id', 'autor', 'id');
+        $this->addForeignKey('fk-book-author_id', 'book', 'author_id', 'author', 'id');
     }
 
     /**
