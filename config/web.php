@@ -52,7 +52,7 @@ $config = [
 
 
         'db' => $db,
-
+        // test test
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
