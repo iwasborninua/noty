@@ -2,6 +2,7 @@
 
 namespace app\modules\admin\controllers;
 
+use app\models\Book;
 use Yii;
 use app\models\Author;
 use app\models\AuthorSerch;
@@ -110,6 +111,16 @@ class AuthorController extends Controller
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+    }
+
+    public function actionList()
+    {
+        $authors = Author::find()->asArray()->all();
+        for ($i = 0; $i < count($authors); $i++) {
+            $authors[$i]['count'] = Book::find()->where(['author_id' => $authors[$i]['id']])->count();
+        }
+
+        return $this->render('list', ['authors' => $authors]);
     }
 
     /**
