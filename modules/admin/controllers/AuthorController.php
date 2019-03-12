@@ -115,10 +115,22 @@ class AuthorController extends Controller
 
     public function actionList()
     {
-        $authors = Author::find()->asArray()->all();
-        for ($i = 0; $i < count($authors); $i++) {
-            $authors[$i]['count'] = Book::find()->where(['author_id' => $authors[$i]['id']])->count();
+
+        // Так себе идея.
+//        $authors = Author::find()->asArray()->all();
+//        for ($i = 0; $i < count($authors); $i++) {
+//            $authors[$i]['count'] = Book::find()->where(['author_id' => $authors[$i]['id']])->count();
+//        }
+
+        $authors = Author::find()
+            ->with('books')
+            ->asArray()
+            ->all();
+
+        foreach ($authors as $k => $author) {
+            $authors[$k]['count'] = count($author['books']);
         }
+
 
         return $this->render('list', ['authors' => $authors]);
     }

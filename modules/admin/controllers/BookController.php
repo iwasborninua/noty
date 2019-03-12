@@ -115,13 +115,23 @@ class BookController extends Controller
 
     public function actionList()
     {
-        $books = Book::find()->asArray()->all();
-        for ($i = 0; $i < count($books); $i++) {
-            $books[$i]['author_name'] = Author::find()->where(['id' => $books[$i]['author_id']])->asArray()->one()['author_name'];
-        }
+
+//        $books = Book::find()->asArray()->all();
+//        for ($i = 0; $i < count($books); $i++) {
+//            $books[$i]['author_name'] = Author::find()->where(['id' => $books[$i]['author_id']])->asArray()->one()['author_name'];
+//        }
 
 //        echo "<pre>";
 //        var_dump($books);
+
+        $books = Book::find()
+            ->with('author')
+            ->asArray()
+            ->all();
+
+        foreach ($books as $k => $book) {
+            $books[$k]['author_name'] = $book['author']['author_name'];
+        }
 
         return $this->render('list', [
             'books' => $books
