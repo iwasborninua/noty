@@ -2,6 +2,8 @@
 
 namespace app\controllers;
 
+use app\models\Author;
+use app\models\Book;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -64,65 +66,25 @@ class SiteController extends Controller
         return $this->render('index');
     }
 
-    /**
-     * Login action.
-     *
-     * @return Response|string
-     */
-    public function actionLogin()
+    public function actionAuthors()
     {
-        if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
+        $authors = Author::find()->asArray()->all();
 
-        $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
-        }
 
-        $model->password = '';
-        return $this->render('login', [
-            'model' => $model,
+        return $this->render('authors_list', [
+            'authors' => $authors
         ]);
     }
 
-    /**
-     * Logout action.
-     *
-     * @return Response
-     */
-    public function actionLogout()
+    public function actionBooks()
     {
-        Yii::$app->user->logout();
+        $books = Book::find()->asArray()->all();
 
-        return $this->goHome();
-    }
 
-    /**
-     * Displays contact page.
-     *
-     * @return Response|string
-     */
-    public function actionContact()
-    {
-        $model = new ContactForm();
-        if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
-            Yii::$app->session->setFlash('contactFormSubmitted');
-
-            return $this->refresh();
-        }
-        return $this->render('contact', [
-            'model' => $model,
+        return $this->render('book_list', [
+            'books' => $books
         ]);
     }
 
-    /**
-     * Displays about page.
-     *
-     * @return string
-     */
-    public function actionAbout()
-    {
-        return $this->render('about');
-    }
+
 }
