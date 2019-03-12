@@ -50,7 +50,7 @@ $config = [
             ],
         ],
 
-        //
+
         'db' => $db,
 
         'urlManager' => [
