@@ -57,6 +57,7 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                "api/v1/<category:[A-Za-z_\-]+>/<action:[A-Za-z_\-]+>' => 'api/<category>-<action>",
             ],
         ],
 

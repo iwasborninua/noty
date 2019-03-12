@@ -33,7 +33,7 @@ class ApiController extends Controller
 
     public function actionBooksList() {
         Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-        return Books::find()
+        return Book::find()
             ->with('author')
             ->all();
     }
