@@ -31,10 +31,42 @@ class ApiController extends Controller
         ];
     }
 
+    /**
+     * получение списка книг с именем автора
+     */
     public function actionBooksList() {
         Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
         return Book::find()
             ->with('author')
             ->all();
+    }
+
+    /**
+     * получение данных книги по id
+     */
+    public function actionBooksById($id) {
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
+        return Book::find()
+            ->where(['id' => $id])
+            ->one();
+    }
+
+    /**
+     * обновление данных книги
+     */
+    public function actionBooksUpdate($id) {
+        $data = Yii::$app->request->post();
+        $book = Book::find()->where(['id' => $id])->one();
+        $book->author = $data['author'];
+        $book->author_id = $data['author_id'];
+        $book->save(false);
+    }
+
+    /**
+     * удаление записи книги из бд
+     */
+    public function actionBooksId($id) {
+        Book::deleteAll(['id' => $id]);
     }
 }
