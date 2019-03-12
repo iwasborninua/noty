@@ -17,6 +17,9 @@ class BookController extends Controller
     /**
      * {@inheritdoc}
      */
+
+    public $layout = 'admin';
+
     public function behaviors()
     {
         return [
